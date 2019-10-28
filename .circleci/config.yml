@@ -1,8 +1,11 @@
 version: 2.1
-description: test macOS build in circeci
+description: test macOS and win32 builds in circeci
+
+orbs:
+  win: circleci/windows@1.0.0
 
 jobs:
-  build:
+  build_macos:
     description: Test macOS build
     macos:
       xcode: '11.0.0'
@@ -18,9 +21,27 @@ jobs:
           command: |
             yarn
             yarn package --mac
-            ls -la release/
+
+  build_win32:
+    description: Test win32 build
+    executor: win/vs2019
+    steps:
+      - checkout
+      - run:
+          name: Install Yarn
+          command: |
+            Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+            choco install yarn
+      - run:
+          name: Run win32 build
+          command: |
+            yarn
+            yarn package --mac
 
 workflows:
   macos-test-pipeline:
     jobs:
-      - build
+      - build_macos
+  win32-test-pipeline:
+    jobs:
+      - build_win32
