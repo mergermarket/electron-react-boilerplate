@@ -1,0 +1,25 @@
+version: 2.1
+description: test macOS build in circeci
+
+jobs:
+  build:
+    description: Test macOS build
+    macos:
+      xcode: '11.0.0'
+    resource_class: medium
+    steps:
+      - checkout
+      - install_yarn:
+          name: Install Yarn
+          command: |
+            curl -o- -L https://yarnpkg.com/install.sh | bash
+      - run:
+          name: Run macOS build
+          command: |
+            yarn
+            yarn package --mac
+
+workflows:
+  macos-test-pipeline:
+    jobs:
+      - build
