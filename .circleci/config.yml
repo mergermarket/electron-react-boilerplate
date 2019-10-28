@@ -9,7 +9,7 @@ jobs:
     resource_class: medium
     steps:
       - checkout
-      - install_yarn:
+      - run:
           name: Install Yarn
           command: |
             curl -o- -L https://yarnpkg.com/install.sh | bash
