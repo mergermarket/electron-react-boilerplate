@@ -36,7 +36,7 @@ jobs:
           name: Run win32 build
           command: |
             yarn
-            yarn package --mac
+            yarn package --win
 
 workflows:
   macos-test-pipeline:
