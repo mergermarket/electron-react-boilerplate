@@ -18,6 +18,7 @@ jobs:
           command: |
             yarn
             yarn package --mac
+            ls -la release/
 
 workflows:
   macos-test-pipeline:
